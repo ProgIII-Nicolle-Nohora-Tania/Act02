@@ -19,7 +19,7 @@ tiene_conexion(X, Y) :- arista(X, Y, _C).
 conectado_a(X, Y, C) :- arista(X, Y, C).
 
 %Determinar si un nodo tiene aristas 
-tiene_aristas(X) :- tiene_conexion(X, _Y);tiene_conexion(_Y, X).
+tiene_aristas(X) :- tiene_conexion(X, _Y).
 
 %Desterminar costo para ir de X a Z pasando por Y
 costo(X, Y, Z, S) :- conectado_a(X, Y, C1), conectado_a(Y, Z, C2), S is C1 + C2.

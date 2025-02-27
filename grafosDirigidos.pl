@@ -23,3 +23,18 @@ tiene_aristas(X) :- tiene_conexion(X, _Y).
 
 %Desterminar costo para ir de X a Z pasando por Y
 costo(X, Y, Z, S) :- conectado_a(X, Y, C1), conectado_a(Y, Z, C2), S is C1 + C2.
+% Caso base: hay una arista directa entre X e Y
+camino_a(X, Y, [X, Y], C) :- arista(X, Y, C).
+
+camino_a(X, Y, [X | Camino], Costo) :-
+    arista(X, Z, C1),                 
+    Z \= Y,                            
+    camino_a(Z, Y, Camino, C2, [X]),   
+    Costo is C1 + C2.
+
+camino_a(X, Y, [X, Y], C, _) :- arista(X, Y, C).
+camino_a(X, Y, [X | Camino], Costo, Visitados) :-
+    arista(X, Z, C1), 
+    \+ member(Z, Visitados),          
+    camino_a(Z, Y, Camino, C2, [Z | Visitados]),  
+    Costo is C1 + C2.
